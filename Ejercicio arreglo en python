@@ -1,0 +1,120 @@
+# Definir los departamentos y los meses
+departamentos = ["Ropa", "Deportes", "Juguetería"]
+meses = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
+         "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
+
+# Crear una tabla de ventas inicializada con ceros
+# Filas: Meses, Columnas: Departamentos
+ventas = [[0 for _ in range(len(departamentos))] for _ in range(len(meses))]
+
+# Función para mostrar la tabla de ventas
+def mostrar_tabla():
+    print("\n--- Tabla de Ventas ---")
+    # Encabezado de departamentos
+    print("{:<12}".format(""), end="")  # Espacio para alinear los meses
+    for depto in departamentos:
+        print("{:<10}".format(depto), end="")  # Mostrar departamentos
+    print()  # Salto de línea
+
+    # Filas de meses con sus ventas
+    for i in range(len(meses)):
+        print("{:<12}".format(meses[i]), end="")  # Mostrar el mes
+        for j in range(len(departamentos)):
+            print("{:<10}".format(ventas[i][j]), end="")  # Mostrar ventas
+        print()  # Salto de línea
+
+# Función para buscar ventas
+def buscar_ventas():
+    print("\n--- Buscar Ventas ---")
+    print("1. Buscar por mes")
+    print("2. Buscar por departamento")
+    opcion = input("Seleccione una opción (1-2): ")
+
+    if opcion == "1":
+        # Buscar por mes
+        print("\nMeses:")
+        for i, mes in enumerate(meses):
+            print(f"{i + 1}. {mes}")
+        mes_seleccionado = int(input("Seleccione el mes (1-12): ")) - 1
+        print(f"\nVentas en {meses[mes_seleccionado]}:")
+        for i, depto in enumerate(departamentos):
+            print(f"{depto}: {ventas[mes_seleccionado][i]}")
+    elif opcion == "2":
+        # Buscar por departamento
+        print("\nDepartamentos:")
+        for i, depto in enumerate(departamentos):
+            print(f"{i + 1}. {depto}")
+        depto_seleccionado = int(input("Seleccione el departamento (1-3): ")) - 1
+        print(f"\nVentas en {departamentos[depto_seleccionado]}:")
+        for i, mes in enumerate(meses):
+            print(f"{mes}: {ventas[i][depto_seleccionado]}")
+    else:
+        print("Opción no válida.")
+
+# Menú principal
+while True:
+    print("\n--- Menú Principal ---")
+    print("1. Insertar ventas")
+    print("2. Eliminar ventas")
+    print("3. Buscar ventas")
+    print("4. Mostrar tabla")
+    print("5. Salir")
+    opcion = input("Seleccione una opción (1-5): ")
+
+    if opcion == "1":
+        print("\n--- Insertar Ventas ---")
+        # Mostrar opciones de meses
+        print("Meses:")
+        for i, mes in enumerate(meses):
+            print(f"{i + 1}. {mes}")
+        mes_seleccionado = int(input("Seleccione el mes (1-12): ")) - 1
+
+        # Mostrar opciones de departamentos
+        print("\nDepartamentos:")
+        for i, depto in enumerate(departamentos):
+            print(f"{i + 1}. {depto}")
+        depto_seleccionado = int(input("Seleccione el departamento (1-3): ")) - 1
+
+        # Pedir la cantidad de ventas
+        cantidad = int(input("Ingrese la cantidad de ventas: "))
+
+        # Actualizar la tabla de ventas
+        ventas[mes_seleccionado][depto_seleccionado] += cantidad
+        print("Ventas agregadas correctamente.")
+
+    elif opcion == "2":
+        print("\n--- Eliminar Ventas ---")
+        # Mostrar opciones de meses
+        print("Meses:")
+        for i, mes in enumerate(meses):
+            print(f"{i + 1}. {mes}")
+        mes_seleccionado = int(input("Seleccione el mes (1-12): ")) - 1
+
+        # Mostrar opciones de departamentos
+        print("\nDepartamentos:")
+        for i, depto in enumerate(departamentos):
+            print(f"{i + 1}. {depto}")
+        depto_seleccionado = int(input("Seleccione el departamento (1-3): ")) - 1
+
+        # Pedir la cantidad de ventas a eliminar
+        cantidad = int(input("Ingrese la cantidad de ventas a eliminar: "))
+
+        # Verificar que no se elimine más de lo que hay
+        if ventas[mes_seleccionado][depto_seleccionado] >= cantidad:
+            ventas[mes_seleccionado][depto_seleccionado] -= cantidad
+            print("Ventas eliminadas correctamente.")
+        else:
+            print("Error: No hay suficientes ventas para eliminar.")
+
+    elif opcion == "3":
+        buscar_ventas()  # Buscar ventas
+
+    elif opcion == "4":
+        mostrar_tabla()  # Mostrar la tabla de ventas
+
+    elif opcion == "5":
+        print("Saliendo del programa...")
+        break
+
+    else:
+        print("Opción no válida. Intente de nuevo.")
